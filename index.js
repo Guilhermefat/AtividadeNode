@@ -9,11 +9,11 @@ function extraiLinks(texto){
     while ((temp = regex.exec(texto)) != null){
         arrayResultado.push({ [temp[1]] : [temp[2]]})
     }
-    return(arrayResultado);
+    return arrayResultado.length === 0 ? "Não há links" : arrayResultado;
 }
 
 function trataErro(erro){
-  throw new Error(chalk.redBright(erro.code, "  Não há Aquivo No Caminho :( ... "));
+    throw new Error(chalk.redBright(erro.code, "  Não há Aquivo No Caminho :( ... "));
 }
 
 async function pegaArquivos(CaminhoDoArquivo){
@@ -21,10 +21,10 @@ async function pegaArquivos(CaminhoDoArquivo){
 
     try{
         const texto = await fs.promises.readFile(CaminhoDoArquivo, enconding);
-        console.log(extraiLinks(texto))
+        return(extraiLinks(texto))
     } catch(erro) {
         trataErro(erro);
     }
-}
+};
 
-pegaArquivos('./Arquivos/texto.md'); 
+export default pegaArquivos;                
